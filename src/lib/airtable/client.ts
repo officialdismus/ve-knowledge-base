@@ -3,14 +3,11 @@ const AIRTABLE_API_URL = "https://api.airtable.com/v0";
 const baseId = process.env.AIRTABLE_BASE_ID;
 const apiKey = process.env.AIRTABLE_PAT;
 
-// In development, allow missing environment variables
-const isDevelopment = process.env.NODE_ENV === 'development';
-const hasAirtableConfig = baseId && apiKey;
+const hasAirtableConfig = Boolean(baseId && apiKey);
 
-if (!hasAirtableConfig && !isDevelopment) {
-  // This is a runtime safeguard; in practice env vars must be set in `.env.local` and Vercel.
-  throw new Error(
-    "Missing Airtable configuration. Please set AIRTABLE_BASE_ID and AIRTABLE_PAT in your environment.",
+if (!hasAirtableConfig) {
+  console.warn(
+    "Airtable env vars are missing; API routes will return empty datasets or throw if writes are attempted.",
   );
 }
 
@@ -102,6 +99,9 @@ export async function airtableCreate<T extends Record<string, unknown>>(
   tableName: string,
   fields: T,
 ): Promise<AirtableCreateResponse<T>> {
+  if (!hasAirtableConfig) {
+    throw new Error("Airtable configuration is missing; cannot create records.");
+  }
   const tablePath = encodeURIComponent(tableName);
   const url = `${AIRTABLE_API_URL}/${baseId}/${tablePath}`;
 
@@ -128,6 +128,9 @@ export async function airtableUpdate<T extends Record<string, unknown>>(
   recordId: string,
   fields: Partial<T>,
 ): Promise<{ id: string; fields: T; createdTime: string }> {
+  if (!hasAirtableConfig) {
+    throw new Error("Airtable configuration is missing; cannot update records.");
+  }
   const tablePath = encodeURIComponent(tableName);
   const url = `${AIRTABLE_API_URL}/${baseId}/${tablePath}/${recordId}`;
 
