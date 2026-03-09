@@ -1,0 +1,28 @@
+{
+  "records": [
+    {
+      "fields": {
+        "Name": "IT Support",
+        "Description": "Technical support and troubleshooting guides",
+        "Status": "Active",
+        "Display Order": 1
+      }
+    },
+    {
+      "fields": {
+        "Name": "HR",
+        "Description": "Human resources policies and procedures",
+        "Status": "Active",
+        "Display Order": 2
+      }
+    },
+    {
+      "fields": {
+        "Name": "Finance",
+        "Description": "Financial processes and guidelines",
+        "Status": "Active",
+        "Display Order": 3
+      }
+    }
+  ]
+}

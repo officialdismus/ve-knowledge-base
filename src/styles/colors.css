@@ -1,0 +1,267 @@
+/* VE Knowledge Base - Official Color System */
+
+/* Core Brand Palette */
+:root {
+  /* 1️⃣ Primary Green (Brand Anchor) */
+  --color-primary-green: #00A651;
+  --color-primary-green-dark: #008842; /* 10% darker for hover */
+  --color-primary-green-light: #E6F2E6; /* Light green for section tints */
+  
+  /* 2️⃣ Action Orange (CTA) */
+  --color-action-orange: #F5A623;
+  --color-action-orange-dark: #d48a0e; /* Darker for hover */
+  
+  /* 3️⃣ Supporting Teal */
+  --color-supporting-teal: #00A5A5;
+  --color-supporting-teal-hover: #00A651; /* Turns green on hover */
+  
+  /* 4️⃣ Primary Text (Earth Brown) */
+  --color-primary-text: #4D2C0A;
+  
+  /* 5️⃣ Neutral Text */
+  --color-neutral-text: #333333;
+  --color-neutral-text-light: #666666;
+  --color-neutral-text-lighter: #999999;
+  
+  /* 6️⃣ Soft Beige (Cards) */
+  --color-soft-beige: #F2E2C1;
+  
+  /* 7️⃣ Light Green (Section Tint) */
+  --color-light-green: #E6F2E6;
+  
+  /* 8️⃣ White (Base) */
+  --color-white: #FFFFFF;
+  
+  /* Neutral Grays */
+  --color-gray-50: #F9FAFB;
+  --color-gray-100: #F3F4F6;
+  --color-gray-200: #E5E7EB;
+  --color-gray-300: #D1D5DB;
+  --color-gray-400: #9CA3AF;
+  --color-gray-500: #6B7280;
+  --color-gray-600: #4B5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1F2937;
+  --color-gray-900: #111827;
+  
+  /* Error Color (Minimal Use) */
+  --color-error: #D9534F;
+  --color-error-light: #FEE2E2;
+  
+  /* Success Colors */
+  --color-success-bg: #E6F2E6;
+  --color-success-border: #00A651;
+  --color-success-text: #00A651;
+  
+  /* Warning Colors */
+  --color-warning-bg: #FEF3E2;
+  --color-warning-border: #F5A623;
+  --color-warning-text: #92400E;
+}
+
+/* Button System Styles */
+.btn-primary {
+  background-color: var(--color-primary-green);
+  color: var(--color-white);
+  border: 1px solid var(--color-primary-green);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px; /* Accessibility */
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-green-dark);
+  border-color: var(--color-primary-green-dark);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary {
+  background-color: var(--color-action-orange);
+  color: var(--color-white);
+  border: 1px solid var(--color-action-orange);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-action-orange-dark);
+  border-color: var(--color-action-orange-dark);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-tertiary {
+  background-color: var(--color-white);
+  color: var(--color-primary-green);
+  border: 1px solid var(--color-primary-green);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  transition: all 0.2s ease;
+}
+
+.btn-tertiary:hover {
+  background-color: var(--color-light-green);
+  border-color: var(--color-primary-green-dark);
+}
+
+.btn-neutral {
+  background-color: var(--color-white);
+  color: var(--color-gray-600);
+  border: 1px solid var(--color-gray-300);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  transition: all 0.2s ease;
+}
+
+.btn-neutral:hover {
+  background-color: var(--color-gray-50);
+  border-color: var(--color-gray-400);
+  color: var(--color-gray-700);
+}
+
+/* Focus Styles for Accessibility */
+.focus-ring:focus {
+  outline: 2px solid var(--color-primary-green);
+  outline-offset: 2px;
+}
+
+/* Alert Styles */
+.alert-success {
+  background-color: var(--color-success-bg);
+  border: 1px solid var(--color-success-border);
+  color: var(--color-success-text);
+  padding: 1rem;
+  border-radius: 0.375rem;
+}
+
+.alert-warning {
+  background-color: var(--color-warning-bg);
+  border: 1px solid var(--color-warning-border);
+  color: var(--color-warning-text);
+  padding: 1rem;
+  border-radius: 0.375rem;
+}
+
+.alert-error {
+  background-color: var(--color-error-light);
+  border: 1px solid var(--color-error);
+  color: var(--color-error);
+  padding: 1rem;
+  border-radius: 0.375rem;
+}
+
+/* Card Styles */
+.card-beige {
+  background-color: var(--color-soft-beige);
+  border: 1px solid var(--color-gray-200);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.card-white {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Link Styles */
+.link-teal {
+  color: var(--color-supporting-teal);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.link-teal:hover {
+  color: var(--color-supporting-teal-hover);
+}
+
+.link-green {
+  color: var(--color-primary-green);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.link-green:hover {
+  color: var(--color-primary-green-dark);
+}
+
+/* Tag/Metadata Styles */
+.tag-teal {
+  background-color: rgba(0, 165, 165, 0.1);
+  color: var(--color-supporting-teal);
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tag-green {
+  background-color: var(--color-light-green);
+  color: var(--color-primary-green);
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Text Styles */
+.text-primary {
+  color: var(--color-primary-text);
+}
+
+.text-neutral {
+  color: var(--color-neutral-text);
+}
+
+.text-neutral-light {
+  color: var(--color-neutral-text-light);
+}
+
+.text-neutral-lighter {
+  color: var(--color-neutral-text-lighter);
+}
+
+/* Background Styles */
+.bg-light-green {
+  background-color: var(--color-light-green);
+}
+
+.bg-beige {
+  background-color: var(--color-soft-beige);
+}
+
+.bg-white {
+  background-color: var(--color-white);
+}

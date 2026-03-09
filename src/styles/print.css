@@ -1,0 +1,62 @@
+/* Print styles per Appendix G */
+@media print {
+  /* Hide navigation & chrome */
+  header,
+  nav,
+  footer,
+  .action-bar,
+  .filters,
+  .breadcrumbs,
+  .toast,
+  .kb-filter-bar,
+  .kb-mobile-sticky {
+    display: none !important;
+  }
+
+  main,
+  .article-container {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 12mm !important;
+    color: #000;
+    background: #fff !important;
+  }
+
+  body {
+    font: 12pt/1.5 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  h1 {
+    font-size: 20pt;
+    page-break-before: avoid;
+  }
+
+  h2 {
+    font-size: 16pt;
+    page-break-after: avoid;
+  }
+
+  h3 {
+    font-size: 14pt;
+  }
+
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 10pt;
+  }
+
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  h2,
+  .section-break {
+    page-break-before: always;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
