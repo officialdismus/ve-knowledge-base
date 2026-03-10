@@ -17,7 +17,7 @@ type CategorySummary = {
 export default function Home() {
   const [articles, setArticles] = useState<ArticleRecord[]>([]);
   const [categories, setCategories] = useState<CategorySummary[]>([]);
-  const { role, contentTypes, setRole, toggleContentType } = useFiltersStore();
+  const { role, contentTypes } = useFiltersStore();
 
   useEffect(() => {
     const fetchArticles = async () => {
