@@ -14,6 +14,11 @@ interface FeedbackForm {
   urgency: 'Low' | 'Medium' | 'High';
   contactInfo: string;
   suggestedChange?: string;
+  fileAttachment?: {
+    filename: string;
+    type: string;
+    data: string;
+  } | null;
 }
 
 function FeedbackContent() {
@@ -58,9 +63,57 @@ function FeedbackContent() {
     urgency: 'Medium',
     contactInfo: '',
     suggestedChange: '',
+    fileAttachment: null,
   });
+  const [fileError, setFileError] = useState<string | null>(null);
+
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+
+  const readFileAsBase64 = (file: File) =>
+    new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = reader.result;
+        if (typeof result === 'string') {
+          const base64 = result.split(',')[1] ?? '';
+          resolve(base64);
+        } else {
+          reject(new Error('Could not read file'));
+        }
+      };
+      reader.onerror = () => reject(reader.error ?? new Error('Failed to read file'));
+      reader.readAsDataURL(file);
+    });
 
   const contextPill = getContextPill();
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) {
+      setFormData((prev) => ({ ...prev, fileAttachment: null }));
+      setFileError(null);
+      return;
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      setFormData((prev) => ({ ...prev, fileAttachment: null }));
+      setFileError('Please upload a file smaller than 5MB.');
+      return;
+    }
+
+    try {
+      const base64 = await readFileAsBase64(file);
+      setFormData((prev) => ({
+        ...prev,
+        fileAttachment: { filename: file.name, type: file.type, data: base64 },
+      }));
+      setFileError(null);
+    } catch (error) {
+      console.error(error);
+      setFormData((prev) => ({ ...prev, fileAttachment: null }));
+      setFileError('Could not read the selected file. Please try another one.');
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,6 +136,7 @@ function FeedbackContent() {
           query: queryParam || undefined,
           categoryGuess: categoryGuessParam || undefined,
           roleFilter: roleFilterParam || undefined,
+          fileAttachment: formData.fileAttachment ?? undefined,
         }),
       });
 
@@ -91,6 +145,16 @@ function FeedbackContent() {
       if (response.ok) {
         setIsSubmitted(true);
         setReferenceId(data.referenceId || 'FB-' + Date.now());
+        setFormData({
+          topic: getDefaultTopic(),
+          description: '',
+          type: normalizeType(typeParam),
+          urgency: 'Medium',
+          contactInfo: '',
+          suggestedChange: '',
+          fileAttachment: null,
+        });
+        setFileError(null);
 
         // fire feedback funnel analytics
         fetch("/api/analytics/feedback", {
@@ -312,6 +376,22 @@ function FeedbackContent() {
                 <p className="mt-1 text-xs text-[#333333]">
                   We&rsquo;ll only contact you if we need clarification about your feedback.
                 </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-[#4D2C0A] mb-2">Attach a file (optional)</label>
+                <input
+                  type="file"
+                  accept="image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                  onChange={handleFileChange}
+                  className="w-full text-sm text-[#4D2C0A] file:mr-3 file:rounded-full file:border-0 file:bg-[#00A651] file:px-4 file:py-2 file:text-xs file:font-semibold file:uppercase file:tracking-wide file:text-white hover:file:bg-[#008b44]"
+                />
+                {formData.fileAttachment && (
+                  <p className="mt-1 text-xs text-[#4D2C0A]">
+                    Attached: <span className="font-medium">{formData.fileAttachment.filename}</span>
+                  </p>
+                )}
+                {fileError && <p className="mt-1 text-xs text-red-600">{fileError}</p>}
               </div>
 
               <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">

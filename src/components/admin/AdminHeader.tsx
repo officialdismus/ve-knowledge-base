@@ -49,7 +49,7 @@ export function AdminHeader() {
                   href={item.href}
                   className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
                     active
-                      ? "bg-[--color-primary-green] text-white shadow-[0_10px_25px_rgba(0,166,81,0.3)]"
+                      ? "bg-[var(--color-primary-green)] text-white shadow-[0_10px_25px_rgba(0,166,81,0.3)]"
                       : "bg-white/80 text-[--color-text-primary] shadow-[0_4px_15px_rgba(0,0,0,0.08)] hover:bg-white"
                   }`}
                 >

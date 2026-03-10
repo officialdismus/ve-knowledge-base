@@ -11,7 +11,5 @@ export async function POST() {
     maxAge: 0,
   });
 
-  // redirect back to the login page
-  const res = NextResponse.redirect("/admin-login");
-  return res;
+  return NextResponse.json({ ok: true });
 }

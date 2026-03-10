@@ -13,6 +13,11 @@ export type FeedbackPayload = {
   query?: string;
   categoryGuess?: string;
   roleFilter?: string;
+  fileAttachment?: {
+    filename: string;
+    type?: string;
+    data: string; // base64 payload without data URI prefix
+  };
 };
 
 export type FeedbackRecord = {
@@ -29,6 +34,11 @@ export type FeedbackRecord = {
   Query?: string;
   "Category Guess"?: string;
   "Role Filter"?: string;
+  File?: {
+    filename?: string;
+    url?: string;
+    type?: string;
+  }[];
 };
 
 const FEEDBACK_TABLE_NAME =
@@ -87,6 +97,17 @@ export async function createFeedback(payload: FeedbackPayload): Promise<string |
   if (payload.query) fields.Query = payload.query;
   if (payload.categoryGuess) fields["Category Guess"] = payload.categoryGuess;
   if (payload.roleFilter) fields["Role Filter"] = payload.roleFilter;
+  if (payload.fileAttachment) {
+    fields.File = [
+      {
+        filename: payload.fileAttachment.filename,
+        type: payload.fileAttachment.type,
+        // Airtable attachments allow base64 via the "data" property when using the API
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ...(payload.fileAttachment.data ? ({ data: payload.fileAttachment.data } as any) : {}),
+      },
+    ];
+  }
 
   const record = await airtableCreate(FEEDBACK_TABLE_NAME, fields);
   return record?.id;

@@ -151,7 +151,7 @@ export function CategoryModal({ open, loading = false, mode, category, onClose, 
             <button
               type="submit"
               disabled={!isValid || loading}
-              className="rounded-full bg-[--color-primary-green] px-5 py-2 text-sm font-semibold text-white shadow disabled:opacity-60"
+              className="rounded-full bg-[var(--color-primary-green)] px-5 py-2 text-sm font-semibold text-white shadow disabled:opacity-60"
             >
               {loading ? "Saving…" : submitLabel}
             </button>

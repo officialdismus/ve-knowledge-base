@@ -83,7 +83,7 @@ export default function AdminTaxonomyPage() {
         </div>
         <button
           onClick={openAddModal}
-          className="inline-flex items-center gap-2 rounded-full bg-[--color-primary-green] px-4 py-2 text-sm font-semibold text-white shadow"
+          className="inline-flex items-center gap-2 rounded-full bg-[var(--color-primary-green)] px-4 py-2 text-sm font-semibold text-white shadow"
         >
           + Add category
         </button>

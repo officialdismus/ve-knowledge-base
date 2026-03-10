@@ -15,6 +15,51 @@ export function FeedbackForm({ relatedArticleSlug, defaultTopic }: Props) {
   const [contactInfo, setContactInfo] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [fileAttachment, setFileAttachment] = useState<{ filename: string; type: string; data: string } | null>(null);
+  const [fileError, setFileError] = useState<string | null>(null);
+
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+
+  const readFileAsBase64 = (file: File) =>
+    new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = reader.result;
+        if (typeof result === "string") {
+          const base64 = result.split(",")[1] ?? "";
+          resolve(base64);
+        } else {
+          reject(new Error("Could not read file"));
+        }
+      };
+      reader.onerror = () => reject(reader.error ?? new Error("Failed to read file"));
+      reader.readAsDataURL(file);
+    });
+
+  async function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file) {
+      setFileAttachment(null);
+      setFileError(null);
+      return;
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      setFileAttachment(null);
+      setFileError("Please upload a file smaller than 5MB.");
+      return;
+    }
+
+    try {
+      const base64 = await readFileAsBase64(file);
+      setFileAttachment({ filename: file.name, type: file.type, data: base64 });
+      setFileError(null);
+    } catch (error) {
+      console.error(error);
+      setFileAttachment(null);
+      setFileError("Could not read the selected file. Please try another one.");
+    }
+  }
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -34,6 +79,7 @@ export function FeedbackForm({ relatedArticleSlug, defaultTopic }: Props) {
           suggestedChange,
           urgency: urgency || undefined,
           contactInfo: contactInfo || undefined,
+          fileAttachment: fileAttachment ?? undefined,
         }),
       });
 
@@ -48,6 +94,7 @@ export function FeedbackForm({ relatedArticleSlug, defaultTopic }: Props) {
       setSuggestedChange("");
       setUrgency("");
       setContactInfo("");
+      setFileAttachment(null);
     } catch (error) {
       setStatus("error");
       setErrorMessage(error instanceof Error ? error.message : "Something went wrong");
@@ -122,6 +169,22 @@ export function FeedbackForm({ relatedArticleSlug, defaultTopic }: Props) {
             placeholder="Optional: email or Slack handle."
           />
         </div>
+      </div>
+
+      <div className="space-y-1">
+        <label className="block text-xs font-medium text-[#4D2C0A]">Attach a file (optional)</label>
+        <input
+          type="file"
+          accept="image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          onChange={handleFileChange}
+          className="w-full text-xs text-[#4D2C0A] file:mr-3 file:rounded-full file:border-0 file:bg-[#00A651] file:px-4 file:py-1.5 file:text-xs file:font-semibold file:uppercase file:tracking-wide file:text-white hover:file:bg-[#008b44]"
+        />
+        {fileAttachment && (
+          <p className="text-xs text-[#4D2C0A]">
+            Attached: <span className="font-medium">{fileAttachment.filename}</span>
+          </p>
+        )}
+        {fileError && <p className="text-xs text-red-600">{fileError}</p>}
       </div>
 
       {status === "error" && errorMessage && (

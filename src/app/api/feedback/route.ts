@@ -24,6 +24,7 @@ export async function POST(request: Request) {
       query: body.query,
       categoryGuess: body.categoryGuess,
       roleFilter: body.roleFilter,
+      fileAttachment: body.fileAttachment,
     });
 
     return NextResponse.json({ ok: true, referenceId });
