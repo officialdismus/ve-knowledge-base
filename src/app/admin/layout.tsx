@@ -1,35 +1,22 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
+import { Inter } from "next/font/google";
 import { AdminHeader } from "@/components/admin/AdminHeader";
+import { AdminMobileNav, AdminSidebar } from "@/components/admin/AdminSidebar";
+
+const adminInter = Inter({ subsets: ["latin"], variable: "--font-admin-inter" });
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen bg-[#E6F2E6] font-sans text-[#4D2C0A]">
+    <div className={`${adminInter.className} min-h-screen bg-[radial-gradient(circle_at_top,#fdf7ec,transparent_60%),linear-gradient(180deg,#f5ede0_0%,#f7fbf7_55%,#e9f3ea_100%)] text-[--color-text-primary]`}>
       <AdminHeader />
-      <div className="mx-auto flex max-w-6xl gap-6 px-4 py-6">
-        <aside className="w-56 rounded-lg bg-white p-4 shadow-sm">
-          <p className="mb-4 text-xs font-semibold uppercase tracking-wide text-[#00A651]">
-            Admin
-          </p>
-          <nav className="space-y-1 text-sm">
-            <Link href="/admin" className="block rounded px-2 py-1 hover:bg-[#E6F2E6]">
-              Dashboard
-            </Link>
-            <Link href="/admin/articles" className="block rounded px-2 py-1 hover:bg-[#E6F2E6]">
-              Articles
-            </Link>
-            <Link href="/admin/feedback" className="block rounded px-2 py-1 hover:bg-[#E6F2E6]">
-              Feedback
-            </Link>
-            <Link href="/admin/taxonomy" className="block rounded px-2 py-1 hover:bg-[#E6F2E6]">
-              Taxonomy
-            </Link>
-            <Link href="/admin/analytics" className="block rounded px-2 py-1 hover:bg-[#E6F2E6]">
-              Analytics
-            </Link>
-          </nav>
-        </aside>
-        <main className="flex-1 space-y-6 rounded-lg bg-white p-6 shadow-sm">{children}</main>
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-10 lg:flex-row">
+        <AdminSidebar />
+        <div className="flex flex-1 flex-col gap-6">
+          <AdminMobileNav />
+          <main className="flex-1 rounded-[32px] border border-white/50 bg-white/95 p-8 shadow-[0_25px_80px_rgba(20,63,34,0.15)]">
+            {children}
+          </main>
+        </div>
       </div>
     </div>
   );

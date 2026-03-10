@@ -71,13 +71,20 @@ export default function Home() {
           <div className="mt-10">
             <HomeSearch />
           </div>
-          <div className="mt-10 space-y-4">
-            <div>
-              <p className="kb-eyebrow text-[--color-support-teal]">Browse categories</p>
-              <p className="text-sm text-[--color-text-muted]">Jump straight into the topics you use the most.</p>
+          <div className="mt-10" />
+
+          <section className="mt-10 space-y-4">
+            <div className="flex flex-col gap-2 text-center">
+              <p className="kb-eyebrow">Browse categories</p>
+              <h2 className="kb-section-heading">Jump into common topics</h2>
+              <p className="text-sm text-[--color-text-muted]">
+                Choose a space to see subtopics, role filters, and featured workflows.
+              </p>
             </div>
             {categories.length === 0 ? (
-              <p className="text-sm text-[--color-text-muted]">Categories will appear here once they are published.</p>
+              <p className="text-center text-sm text-[--color-text-muted]">
+                Categories will appear here as soon as they are published.
+              </p>
             ) : (
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {categories.map((category) => {
@@ -89,7 +96,7 @@ export default function Home() {
                     <Link
                       key={category.id}
                       href={`/categories/${encodeURIComponent(slug)}`}
-                      className="group rounded-2xl border border-transparent bg-white/80 p-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-[--color-primary-green]"
+                      className="group rounded-2xl border border-[--color-border] bg-white/90 p-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-[--color-primary-green]"
                     >
                       <p className="text-xs font-semibold uppercase tracking-wide text-[--color-support-teal]">
                         {category.articleCount ?? 0} article{(category.articleCount ?? 0) === 1 ? "" : "s"}
@@ -105,72 +112,10 @@ export default function Home() {
                 })}
               </div>
             )}
-          </div>
+          </section>
         </section>
 
         <div className="mx-auto max-w-6xl space-y-12 px-4 pb-16">
-          <section className="space-y-4">
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <p className="kb-eyebrow">By role & content type</p>
-                <h2 className="kb-section-heading">Tailor results to your work</h2>
-              </div>
-              {(role || contentTypes.length > 0) && (
-                <div className="text-sm text-[--color-text-muted]">
-                  Active filters: {role ? `${role}` : ""} {contentTypes.join(", ")}
-                </div>
-              )}
-            </div>
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="rounded-2xl bg-white/95 p-5 shadow-[0_20px_45px_rgba(0,0,0,0.06)]">
-                <p className="kb-eyebrow">Browse by role</p>
-                <p className="text-sm text-[--color-text-muted]">Choose who you are to see relevant guidance.</p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {[
-                    "Field Staff",
-                    "Program Ops",
-                    "Finance",
-                    "IT",
-                    "People",
-                  ].map((option) => (
-                    <button
-                      key={option}
-                      type="button"
-                      onClick={() => setRole(role === option ? null : option)}
-                      className={`rounded-full px-3 py-1 text-sm font-semibold shadow-sm transition ${
-                        role === option
-                          ? "bg-[--color-primary-green] text-white shadow-lg shadow-[--color-primary-green]/30"
-                          : "bg-white text-[--color-text-primary] hover:bg-[--color-primary-green-light]/70"
-                      }`}
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div className="kb-card">
-                <p className="kb-eyebrow">Content types</p>
-                <p className="text-sm text-[--color-text-muted]">Guides, quick fixes, checklists, policies, and FAQs.</p>
-                <div className="mt-4 grid grid-cols-2 gap-2">
-                  {["Guide", "Quick Fix", "Checklist", "Policy", "FAQ"].map((type) => (
-                    <button
-                      key={type}
-                      type="button"
-                      onClick={() => toggleContentType(type)}
-                      className={`rounded-xl px-3 py-2 text-sm text-left font-semibold shadow-sm transition ${
-                        contentTypes.includes(type)
-                          ? "bg-[--color-primary-green] text-white shadow-lg shadow-[--color-primary-green]/30"
-                          : "bg-white text-[--color-text-primary] hover:bg-[--color-soft-beige]"
-                      }`}
-                    >
-                      {type}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
-
           {trending.length > 0 && (
             <section className="space-y-6">
               <div className="text-center">
@@ -317,7 +262,7 @@ export default function Home() {
             </p>
             <Link
               href="/feedback?type=request_article&source=home"
-              className="mt-6 inline-flex items-center justify-center rounded-full bg-[--color-primary-green-dark] px-8 py-3 text-base font-semibold text-white shadow-lg shadow-[--color-primary-green-dark]/40 transition hover:-translate-y-0.5 hover:bg-[#005f32]"
+              className="mt-6 inline-flex items-center justify-center rounded-full bg-[#005f32] px-8 py-3 text-base font-semibold text-white shadow-lg shadow-[rgba(0,95,50,0.4)]"
             >
               Request an article
             </Link>

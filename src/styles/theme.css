@@ -55,6 +55,14 @@ body {
   color: var(--color-text-neutral);
 }
 
+.bg-white {
+  background-color: var(--color-base-white);
+}
+
+.bg-white {
+  color: var(--color-text-primary);
+}
+
 .kb-card {
   background: var(--color-base-white);
   border: 1px solid var(--color-border);

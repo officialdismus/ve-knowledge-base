@@ -1,5 +1,21 @@
-/* Print styles per Appendix G */
+/* Modern print layout tuned for Articles */
 @media print {
+  @page {
+    size: auto;
+    margin: 12mm;
+  }
+
+  :root,
+  body,
+  main {
+    background: #fff !important;
+    color: #1f1205 !important;
+  }
+
+  body {
+    font: 12pt/1.5 "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+
   /* Hide navigation & chrome */
   header,
   nav,
@@ -9,35 +25,54 @@
   .breadcrumbs,
   .toast,
   .kb-filter-bar,
-  .kb-mobile-sticky {
+  .kb-mobile-sticky,
+  .print-hide {
     display: none !important;
   }
 
   main,
-  .article-container {
+  .article-container,
+  .print-article {
     width: 100% !important;
     margin: 0 !important;
-    padding: 0 12mm !important;
-    color: #000;
-    background: #fff !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
   }
 
-  body {
-    font: 12pt/1.5 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+  .print-hero {
+    border-bottom: 1px solid #d6cec0;
+    padding-bottom: 10mm;
+    margin-bottom: 10mm;
   }
 
-  h1 {
-    font-size: 20pt;
-    page-break-before: avoid;
+  .print-hero h1 {
+    font-size: 24pt;
+    margin: 0 0 4mm;
   }
 
-  h2 {
+  .print-description {
+    font-size: 13pt;
+    color: #4d2c0a;
+  }
+
+  .print-keep {
+    border: 1px solid #e5decf;
+    border-radius: 10px;
+    padding: 10mm;
+    page-break-inside: avoid;
+    margin-bottom: 8mm;
+  }
+
+  .print-keep h2 {
     font-size: 16pt;
-    page-break-after: avoid;
+    margin-top: 0;
   }
 
-  h3 {
-    font-size: 14pt;
+  .print-keep p,
+  .print-keep .prose {
+    font-size: 12pt;
+    color: #2c1a0a;
   }
 
   a[href]:after {
@@ -45,14 +80,10 @@
     font-size: 10pt;
   }
 
-  img {
+  img,
+  .print-keep .prose img {
     max-width: 100% !important;
     page-break-inside: avoid;
-  }
-
-  h2,
-  .section-break {
-    page-break-before: always;
   }
 
   * {

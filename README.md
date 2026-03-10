@@ -196,4 +196,4 @@ MIT © Village Enterprise / Dismus Mumanthi
 
 ---
 
-Happy shipping! 💚
+
